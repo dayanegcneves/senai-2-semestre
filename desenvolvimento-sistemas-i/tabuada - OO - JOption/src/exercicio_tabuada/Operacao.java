@@ -21,16 +21,16 @@ public class Operacao {
         for(i=1; i<=10; i++){
             switch (n) {
                 case 1:
-                    tabuada = calculo.adicao(numero, i);
+                    tabuada += calculo.adicao(numero, i);
                     break;
                 case 2:
-                    tabuada = calculo.subtracao(numero, i);
+                    tabuada += calculo.subtracao(numero, i);
                     break;
                 case 3:
-                    tabuada = calculo.multiplicacao(numero, i);
+                    tabuada += calculo.multiplicacao(numero, i);
                     break;
                 case 4:
-                    tabuada = calculo.divisao(numero, i);
+                    tabuada += calculo.divisao(numero, i);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida");
