@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="filmes, series, terror">
+    <title>MovieStudio</title>
+</head>
+<body>
+    <header>
+        <a href="https://letterboxd.com/films/" target="_blank">
+            <img src="/img/logo.png" alt="logo-pagina" width="10%">
+        </a>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#preferencias">Preferências</a>
+            <a href="#minha-lista">Minha Lista</a>
+            <a href="#formulario">Sugestões</a>
+        </nav>
+    </header>
+
+    <div class="conteudo">   
+        <section>
+            <div id="preferencias">
+                <h2>Preferências (Gêneros)</h2>
+                <ul>
+                    <li><h4>Terror</h4></li>
+                    <p>Os filmes e séries de terror, muitas vezes lidam com os pesadelos do espectador, as fobias ocultas, a repulsa e o medo do desconhecido. </p>
+
+                    <li><h4>Ação</h4></li>
+                    <p>Os filmes e séries de ação geralmente envolve uma história de protagonistas do bem contra antagonistas do mal, que resolvem suas disputas com o uso de força física.</p>
+
+                    <li><h4>Aventura</h4></li>
+                    <p>O filme/série de aventura pode ser caracterizado como uma história onde um herói enfrenta uma série de obstáculos, exibindo coragem ao enfrentar situações que fogem ao cotidiano.</p>
+                </ul>
+            </div>
+        </section>
+
+        <img src="/img/invocacao-background.jpg" alt="invocacao-do-mal" width="60%">
+
+        <aside id="minha-lista">
+            <h2>Minha lista - 2023</h2>
+            <ol>
+                <li><a href="https://www.adorocinema.com/filmes/filme-278587/" target="_blank">A Luz do Demônio</a></li>
+                <li><a href="https://www.adorocinema.com/filmes/filme-300624/" target="_blank">Pânico 6</a></li>
+                <li><a href="https://www.adorocinema.com/series/serie-26316/" target="_blank">The Last of Us</a></li>
+                <li><a href="https://www.adorocinema.com/filmes/filme-274387/" target="_blank">John Wick 4</a></li>
+                <li><a href="https://www.adorocinema.com/series/serie-19954/" target="_blank">His Dark Materials</a></li>
+                <li><a href="https://www.adorocinema.com/series/serie-22940/" target="_blank">O Senhor dos Anéis: Os Anéis do Poder</a></li>
+                <li><a href="https://www.adorocinema.com/series/serie-23904/" target="_blank">Daisy Jones & the Six</a></li>
+                <li><a href="https://www.adorocinema.com/filmes/filme-261724/" target="_blank">Homem-Formiga e a Vespa: Quantumania</a></li>
+                <li><a href="https://www.adorocinema.com/series/serie-27439/" target="_blank">Alice in Borderland</a></li>
+                <li><a href="https://www.adorocinema.com/series/serie-18705/" target="_blank">Carnival Row</a></li>
+                <li><a href="https://www.adorocinema.com/filmes/filme-109327/" target="_blank">O Olho do Mal</a></li>
+                <li><a href="https://www.adorocinema.com/filmes/filme-312213/" target="_blank">Na Palma da Mão</a></li>
+            </ol>
+        </aside>
+
+    </div>
+
+    <div id="formulario">
+        <form action="#">
+            <h2>Conhece filmes, séries e documentários legais? Deixe abaixo a sua sugestão:</h2>
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" placeholder="Seu nome">
+            <br><br>
+
+            <label for="categoria">Categoria:</label>
+            <select name="categoria" id="categoria">
+                <option value="acao">Ação</option>
+                <option value="aventura">Aventura</option>
+                <option value="biografico">Biográfico</option>
+                <option value="comedia">Comédia</option>
+                <option value="historico">Histórico</option>
+                <option value="Drama">Drama</option>
+                <option value="fantasia">Fantasia</option>
+                <option value="ficcao">Ficção Científica</option>
+                <option value="musical">Musical</option>
+                <option value="romance">Romance</option>
+                <option value="terror">Terror</option>
+            </select>
+            <br><br>
+
+            <label for="sugestao">Sugestão:</label>
+            <textarea name="indicacao" id="indicacao" cols="30" rows="3">Deixe aqui sua sugestão</textarea>
+            <br>
+
+            <br>
+            <input class="submit" type="submit" value="Enviar">
+        </form>
+    </div>
+
+    <footer>
+        <hr>
+        <span>© 2023 Dayane Neves. Todos os direitos reservados </span>
+    </footer>
+</body>
+</html>

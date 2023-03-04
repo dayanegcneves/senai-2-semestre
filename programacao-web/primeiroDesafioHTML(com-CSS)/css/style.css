@@ -1,0 +1,142 @@
+body{
+    font-family: Tahoma;
+    min-width: 1000px;
+}
+
+header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+}
+
+img{
+    width: 10%;
+    margin-left: 30px;
+}
+
+a{
+    text-decoration: none;
+}
+
+nav{
+    margin-right: 30px;
+}
+
+nav a{
+    padding: 0 20px;
+    color: #181818;
+}
+
+nav a:hover{
+    color: #fca311;
+}
+
+.conteudo{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row-reverse;
+}
+
+aside{
+    width: 22%;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #181818;
+    color: #fca311;
+}
+
+aside h3{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+aside li{
+    padding: 10px 0;
+}
+
+li a{
+    color: #fca311;
+    font-size: 17px;
+}
+
+li a:hover{
+    color: #fff;
+}
+
+section{
+    width: 77.9%;
+    padding: 30px;
+    box-sizing: border-box;
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0), #181818 55%),
+    url('../img/invocacao-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.descricao{
+    width: 45%;
+    color: #fff;
+}
+
+.descricao h2{
+    padding-bottom: 30px;
+}
+
+.descricao li{
+    font-size: 20px;
+}
+
+.descricao p{
+    padding-bottom: 40px;
+    line-height: 150%;
+}
+
+.formulario{
+    text-align: center;
+    padding-top: 10px;
+    margin: 20px 0;
+}
+
+.formulario h3{
+    margin-bottom: 50px;
+}
+
+label{
+    text-align: left;
+    margin-left: 20px;
+}
+ 
+input{
+    width: 350px;
+    height: 30px;
+    margin-bottom: 30px;
+}
+
+select{
+    width: 150px;
+    height: 30px;
+}
+
+textarea{
+    resize: none;
+}
+
+.submit{
+    background-color: #fca311;
+    border: 0;
+    border-radius: 25px;
+    width: 150px;
+}
+
+.submit:hover{
+    cursor: pointer;
+    background-color: #181818;
+    color: #fff;
+}
+
+footer{
+    text-align: center;
+    background-color: #fca311;
+    height: 30px;
+}
