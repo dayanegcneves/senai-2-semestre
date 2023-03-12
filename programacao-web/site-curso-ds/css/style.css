@@ -1,0 +1,202 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+   font-family: 'Roboto', sans-serif;
+   color: #000000;
+   min-width: 900px;
+}
+
+h1{
+    width: 350px;
+    padding-bottom: 10px;
+    margin-bottom: 60px;
+    border-bottom: 2px solid #297FCA;
+    font-size: 2em;
+}
+
+h2{
+    font-size: 1.8em;
+    text-align: center;
+    font-weight: lighter;
+    margin-bottom: 40px;
+}
+
+h3{
+    font-size: 1.5em;
+    margin-bottom: 30px;
+}
+
+h4{
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+p{
+    line-height: 200%;
+    font-size: 1em;
+}
+
+li{
+    margin: 20px auto;
+    padding: 20px;
+}
+
+hr{
+    width: 98%;
+    margin: auto;
+}
+
+label{
+    font-size: 1.3em;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+input[type="text"], input[type="tel"], input[type="email"]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    border: none;
+    background-color: #e4e4e4;
+}
+
+form {
+    text-align: center;
+}
+
+form tr{
+    text-align: left;
+}
+
+input[type="submit"]{
+    margin: 30px auto;
+    padding: 10px 40px;
+    text-align: center;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    background-color: #E8402D;
+    color: #fff;
+}
+
+input[type="submit"]:hover{
+    background-color: #00B4D8;
+    cursor: pointer;
+}
+
+header{
+    background-color:#00B4D8;
+    height: 15%;
+}
+
+th{
+    background-color: #297FCA;
+    color: #fff;
+}
+
+footer{
+    background-color:#00B4D8;
+    height: 10%;
+    text-align: center;
+    padding: 10px;
+    color: #fff;
+}
+
+header .central, section{
+    width: 90%;
+    margin: auto;
+}
+
+header .central{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header img{
+    margin: 10px 0;
+    width: 15%;
+}
+
+nav a{
+    text-decoration: none;
+    color: #fff;
+    margin: 0 15px;
+    padding-bottom: 10px;
+}
+
+nav a:hover{
+    color: #03045E;
+    border-bottom: 1px solid #03045E;
+}
+
+#sobre-curso, #media-notas{
+    margin: 50px auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#sobre-curso .sobre{
+    width: 45%;
+}
+
+#sobre-curso img, #media-notas img{
+    width: 40%;
+}
+
+
+#grade-curricular, #contato{
+    margin: 50px auto;
+}
+
+#media-notas table, #media-notas table th, #media-notas table td{
+    border: 1px solid #000000;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+#media-notas td, #media-notas th{
+    width: 30%;
+    padding: 5px;
+}
+
+#contato table{
+    width: 100%;
+}
+
+#contato tr{
+    margin: 20px auto;
+}
+
+#contato td{
+    padding: 20px;
+}
+
+.topo{
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    background-image: linear-gradient(#297FCA, #00B4D8);
+    bottom: 40px;
+    right: 40px;
+    border-radius: 50%;
+
+    text-decoration: none;
+    text-align: center;
+    line-height: 50px;
+}
+
+.topo img{
+    width: 50%
+}
+
+
+
+
+
+
