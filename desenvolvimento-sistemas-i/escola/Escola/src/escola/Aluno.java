@@ -68,11 +68,15 @@ public class Aluno {
         this.matricula = matricula;
     }
 
-    public void imprimirCadastro() {
-        JOptionPane.showMessageDialog(null, "Aluno "
-                                                        + "\nNome: " + nome
-                                                        + "\nMatricula: " + matricula
-                                                        + "\nCurso: " + curso
-                                                        + "\nSemestre: " + semestre);
+    public String imprimir() {
+        return "Aluno "
+                + "\nNome: " + nome
+                + "\nMatricula: " + matricula
+                + "\nIdade: " + idade
+                + "\nCurso: " + curso
+                + "\nSemestre: " + semestre
+                + "\n\n";
     }
+    
+    
 }

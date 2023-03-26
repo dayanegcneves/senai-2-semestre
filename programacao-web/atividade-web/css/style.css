@@ -1,0 +1,182 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    min-width: 500px;
+    width: 90%;
+    margin: auto;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1em;
+    background-color: #fefefe;
+}
+
+h1{
+    font-size: 3em;
+    text-transform: uppercase;
+    color: #023047;
+}
+
+a{
+    text-decoration: none;
+    color: #FB8500;
+}
+
+p{
+    line-height: 150%;
+}
+
+ol{
+    list-style-position: inside;
+}
+
+header{
+    margin: 10px 0;
+}
+
+input::placeholder{
+    color: #000;
+}
+
+header .logo-principal{
+    display: flex;
+    align-items: center;
+}
+
+header .logo-principal form{
+    width: 45%;
+}
+
+header input[type=text] {
+    border: none;
+    height: 30px;
+    padding: 5px;
+    box-sizing: border-box;
+    background-color: #8ECAE6;
+    color: #000;
+}
+
+header input[type=submit]{
+    height: 30px;
+    width: 20%;
+    border: none;
+}
+
+header input[type=submit]:hover{
+    background-color: #219EBC;
+    color: #fff;
+    cursor: pointer;
+}
+
+header ol{
+    display: flex;
+    list-style-type: none;
+    justify-content: center;
+}
+
+header li{
+    margin: 20px;
+}
+
+header li a{
+    text-decoration: none;
+    padding: 5px 10px;
+}
+
+header li a:hover{
+    background-color: #FB8500;
+    color: #fff;
+    border-radius: 20px;
+}
+
+.central{
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.central .esquerda{
+    width: 60%;
+}
+
+.central img{
+    width: 30%;
+    padding: 5px 10px 0 10px;
+    box-sizing: border-box;
+    background-color: #8ECAE6;
+    border-radius: 30px;
+}
+
+section{
+    margin: 20px 0;
+}
+
+section h2, section h3{
+    color: #023047;
+    margin: 15px 0;
+}
+
+section ol li{
+    margin: 10px 0;
+}
+
+form{
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.form{
+    width: 50%;
+}
+
+form img{
+    width: 40%;
+}
+
+legend{
+    color: #023047;
+    font-weight: bold;
+    padding: 0 5px;
+    font-size: 1.2em;
+}
+
+fieldset{
+    margin-bottom: 20px 0;
+}
+
+form fieldset{
+    box-sizing: border-box;
+    padding: 15px;
+}
+
+.form td {
+    width: 100px;
+}
+
+
+.form table td input, select{
+    background-color: #eaeaea;
+    border: none;
+    height: 40px;
+    width: 400%;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+textarea{
+    resize: none;
+}
+
+input[type=submit]{
+    color: #fff;
+    background-color: #FB8500;
+    border: none;
+    width: 25%;
+    height: 40px;
+}
+
