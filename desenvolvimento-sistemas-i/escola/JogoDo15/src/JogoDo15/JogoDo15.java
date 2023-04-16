@@ -4,7 +4,10 @@
  */
 package JogoDo15;
 
-import javax.swing.JOptionPane;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+import javax.swing.JButton;
 
 /**
  *
@@ -13,36 +16,101 @@ import javax.swing.JOptionPane;
 public class JogoDo15 extends javax.swing.JFrame {
 
     Funcoes funcao = new Funcoes();
-    int cont=1;
+    int cont = 0, tempoPassado = 0;
+
+    static int horas, minutos, segundos, milessegundos;
+    static boolean status;
+
     /**
      * Creates new form JogoDo15
      */
     public JogoDo15() {
         initComponents();
-        
+        bContinue.setVisible(false);
     }
-    
-    public void solucao(){
-        if(b1.getText().equals("1") &&
-           b2.getText().equals("2") &&
-           b3.getText().equals("3") &&
-           b4.getText().equals("4") &&
-           b5.getText().equals("5") &&
-           b6.getText().equals("6") &&
-           b7.getText().equals("7") &&
-           b8.getText().equals("8") &&
-           b9.getText().equals("9") &&
-           b10.getText().equals("10") &&
-           b11.getText().equals("11") &&
-           b12.getText().equals("12") &&
-           b13.getText().equals("13") &&
-           b14.getText().equals("14") &&
-           b15.getText().equals("15") &&
-           b16.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Jogo concluído");
+
+    // Método para contar o número de jogadas realizadas pelo jogador
+    public void contar() {
+        // Obtém o número de jogadas da classe Funcao
+        cont = funcao.nJogadas;
+
+        // Se o número de jogadas for igual a 1, inicia o cronômetro
+        if (funcao.nJogadas == 1) {
+            cronometro(true, 0); // inicia o cronômetro
         }
-        
-        nJogadas.setText(Integer.toString(cont++));
+
+        // Atualiza o texto do JLabel que exibe o número de jogadas
+        nJogadas.setText(Integer.toString(cont));
+    }
+
+    // O método recebe um novo status para o cronômetro e um tempo inicial em milissegundos.
+    public void cronometro(boolean novoStatus, int tempoInicial) {
+        // Atualiza o status do cronômetro com o novo valor.
+        status = novoStatus;
+
+        // Define as horas, minutos, segundos e milissegundos iniciais do cronômetro com base no tempo inicial em milissegundos.
+        horas = tempoInicial / 3600000;
+        minutos = (tempoInicial / 60000) % 60;
+        segundos = (tempoInicial / 1000) % 60;
+        milessegundos = tempoInicial % 1000;
+
+        // Cria uma nova thread para executar o cronômetro.
+        Thread tempo = new Thread() {
+            public void run() {
+                // Executa o cronômetro enquanto o status for verdadeiro.
+                try {
+                    for (; horas < 24; horas++) {
+                        for (; minutos < 60; minutos++) {
+                            for (; segundos < 60; segundos++) {
+                                for (; milessegundos < 1000; milessegundos++) {
+                                    // Verifica se o status foi alterado para falso.
+                                    if (status == false) {
+                                        // Sai do loop caso a thread tenha sido interrompida.
+                                        return;
+                                    }
+                                    // Atualiza a interface gráfica do cronômetro com os valores de horas, minutos, segundos e milissegundos formatados.
+                                    timerLabel.setText(String.format("%02d:%02d:%02d:%03d", horas, minutos, segundos, milessegundos));
+                                    // Aguarda 1 milissegundo antes de atualizar o cronômetro novamente.
+                                    Thread.sleep(1);
+                                }
+                                milessegundos = 0;
+                            }
+                            segundos = 0;
+                        }
+                        minutos = 0;
+                    }
+                    
+                    /*Essas variáveis são inicializadas fora dos loops para manter o valor inicial que foi passado para o método e, 
+                    assim, permitir que o cronômetro comece a partir do tempo inicial desejado. Se essas variáveis fossem inicializadas 
+                    dentro dos loops, elas seriam reiniciadas a cada iteração, fazendo com que o cronômetro começasse sempre do mesmo ponto inicial.*/
+                    
+                } catch (InterruptedException e) {
+                    // Caso a thread seja interrompida, a exceção é tratada e a thread é interrompida.
+                    Thread.currentThread().interrupt();
+                }
+            }
+
+        };
+        // Inicia a thread do cronômetro.
+        tempo.start();
+    }
+
+    // Este método é responsável por resetar o cronômetro e outras variáveis relacionadas.
+    public void resetCronometro() {
+        // Para o cronômetro.
+        cronometro(false, 0);
+
+        // Zera as variáveis das horas, minutos, segundos e milissegundos.
+        horas = 0;
+        minutos = 0;
+        segundos = 0;
+        milessegundos = 0;
+
+        // Atualiza o número de jogadas para 0.
+        nJogadas.setText("0");
+
+        // Reseta o número de jogadas da função "funcao".
+        funcao.nJogadas = 0;
     }
 
     /**
@@ -56,6 +124,7 @@ public class JogoDo15 extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
         b1 = new javax.swing.JButton();
         b2 = new javax.swing.JButton();
         b3 = new javax.swing.JButton();
@@ -76,12 +145,21 @@ public class JogoDo15 extends javax.swing.JFrame {
         solucao = new javax.swing.JButton();
         sair = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        timerLabel = new javax.swing.JLabel();
+        embaralhar = new javax.swing.JButton();
+        bPause = new javax.swing.JButton();
+        bContinue = new javax.swing.JButton();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane2.setViewportView(jTextArea1);
 
+        jLabel2.setText("jLabel2");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setLocation(new java.awt.Point(0, 0));
 
         b1.setFont(new java.awt.Font("Segoe UI", 0, 40)); // NOI18N
         b1.setText("6");
@@ -216,6 +294,7 @@ public class JogoDo15 extends javax.swing.JFrame {
         nJogadas.setToolTipText("");
         nJogadas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
+        solucao.setBackground(new java.awt.Color(153, 255, 102));
         solucao.setText("Solucionar");
         solucao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -223,6 +302,7 @@ public class JogoDo15 extends javax.swing.JFrame {
             }
         });
 
+        sair.setBackground(new java.awt.Color(255, 51, 51));
         sair.setText("Sair");
         sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -234,22 +314,53 @@ public class JogoDo15 extends javax.swing.JFrame {
         jLabel1.setText("Jogadas");
         jLabel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("Tempo");
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        timerLabel.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        timerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timerLabel.setText("00:00:00:000");
+        timerLabel.setToolTipText("");
+        timerLabel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        timerLabel.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                timerLabelComponentAdded(evt);
+            }
+        });
+
+        embaralhar.setBackground(new java.awt.Color(153, 255, 255));
+        embaralhar.setText("Embaralhar");
+        embaralhar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                embaralharActionPerformed(evt);
+            }
+        });
+
+        bPause.setBackground(new java.awt.Color(255, 255, 102));
+        bPause.setText("Pause");
+        bPause.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bPauseActionPerformed(evt);
+            }
+        });
+
+        bContinue.setBackground(new java.awt.Color(255, 204, 153));
+        bContinue.setText("Continuar");
+        bContinue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bContinueActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(b13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(b14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(b15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(b16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -275,19 +386,53 @@ public class JogoDo15 extends javax.swing.JFrame {
                                 .addComponent(b11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(b12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(50, 50, 50)
+                        .addGap(50, 50, 50))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(solucao, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(sair, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(68, 68, 68))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(solucao, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(38, 38, 38)
+                                .addComponent(embaralhar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(sair, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(b13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(b14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(b15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(b16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(nJogadas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(timerLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                    .addComponent(bPause, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(bContinue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(timerLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(bPause, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bContinue, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(b1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -305,23 +450,19 @@ public class JogoDo15 extends javax.swing.JFrame {
                             .addComponent(b9, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(b10, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(b11, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(b12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b12, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nJogadas, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(solucao, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(sair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(b13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(b16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(b13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b14, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b15, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(b16, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(27, 27, 27)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(solucao, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(embaralhar, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sair, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 38, Short.MAX_VALUE))))
         );
 
         pack();
@@ -329,113 +470,169 @@ public class JogoDo15 extends javax.swing.JFrame {
 
     private void b1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b1ActionPerformed
         funcao.mover(b1, b2, b5);
-        solucao();
+        contar();
     }//GEN-LAST:event_b1ActionPerformed
 
     private void b2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b2ActionPerformed
         funcao.mover(b2, b1, b6, b3);
-        solucao();
+        contar();
     }//GEN-LAST:event_b2ActionPerformed
 
     private void b3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b3ActionPerformed
         funcao.mover(b3, b2, b7, b4);
-        solucao();
+        contar();
     }//GEN-LAST:event_b3ActionPerformed
 
     private void b4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b4ActionPerformed
         funcao.mover(b4, b3, b8);
-        solucao();
+        contar();
     }//GEN-LAST:event_b4ActionPerformed
 
     private void b5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b5ActionPerformed
         funcao.mover(b5, b1, b6, b9);
-        solucao();
+        contar();
     }//GEN-LAST:event_b5ActionPerformed
 
     private void b6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b6ActionPerformed
         funcao.mover(b6, b5, b10, b7, b2);
-        solucao();
+        contar();
     }//GEN-LAST:event_b6ActionPerformed
 
     private void b7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b7ActionPerformed
         funcao.mover(b7, b6, b11, b8, b3);
-        solucao();
+        contar();
     }//GEN-LAST:event_b7ActionPerformed
 
     private void b8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b8ActionPerformed
         funcao.mover(b8, b4, b7, b12);
-        solucao();
+        contar();
     }//GEN-LAST:event_b8ActionPerformed
 
     private void b9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b9ActionPerformed
         funcao.mover(b9, b5, b10, b13);
-        solucao();
+        contar();
     }//GEN-LAST:event_b9ActionPerformed
 
     private void b10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b10ActionPerformed
         funcao.mover(b10, b9, b14, b11, b6);
-        solucao();
+        contar();
     }//GEN-LAST:event_b10ActionPerformed
 
     private void b11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b11ActionPerformed
         funcao.mover(b11, b10, b15, b12, b7);
-        solucao();
+        contar();
     }//GEN-LAST:event_b11ActionPerformed
 
     private void b12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b12ActionPerformed
         funcao.mover(b12, b8, b11, b16);
-        solucao();
+        contar();
     }//GEN-LAST:event_b12ActionPerformed
 
     private void b13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b13ActionPerformed
         funcao.mover(b13, b9, b14);
-        solucao();
+        contar();
     }//GEN-LAST:event_b13ActionPerformed
 
     private void b14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b14ActionPerformed
         funcao.mover(b14, b13, b10, b15);
-        solucao();
+        contar();
     }//GEN-LAST:event_b14ActionPerformed
 
     private void b15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b15ActionPerformed
         funcao.mover(b15, b14, b11, b16);
-        solucao();
+        contar();
     }//GEN-LAST:event_b15ActionPerformed
 
     private void b16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_b16ActionPerformed
+        // Chama a função "mover" da classe "funcao" para mover o botão b16 para o espaço vazio adjacente.
         funcao.mover(b16, b15, b12);
-        solucao();
+
+        // Incrementa o contador de jogadas.
+        contar();
+
+        // Verifica se o jogador venceu o jogo.
+        boolean aux = funcao.verificarVitoria(b16, b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15);
+
+        // Se o jogador venceu, reseta o cronômetro.
+        if (aux == true) {
+            resetCronometro();
+        }
     }//GEN-LAST:event_b16ActionPerformed
 
     private void solucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_solucaoActionPerformed
-        b1.setText("1");
-        b2.setText("2");
-        b3.setText("3");
-        b4.setText("4");
-        b5.setText("5");
-        b6.setText("6");
-        b7.setText("7");
-        b8.setText("8");
-        b9.setText("9");
-        b10.setText("10");
-        b11.setText("11");
-        b12.setText("12");
-        b13.setText("13");
-        b14.setText("14");
-        b15.setText("15");
-        b16.setText("");
-        
-        JOptionPane.showMessageDialog(null, "Jogo concluído");
+        // Reseta o cronômetro.
+        resetCronometro();
+
+        // Cria um array de botões para ser usado como argumento no método "solucionar".
+        JButton[] botoes = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16};
+
+        // Chama o método "solucionar" da classe "funcao" e passa o array de botões como argumento.
+        funcao.solucionar(botoes);
+
     }//GEN-LAST:event_solucaoActionPerformed
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
         System.exit(0);
     }//GEN-LAST:event_sairActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
+    private void embaralharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_embaralharActionPerformed
+        // Cria um array de botões para ser usado como argumento no método "embaralhar".
+        JButton[] botoes = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16};
+
+        // Chama o método "embaralhar" da classe "funcao" e passa o array de botões como argumento.
+        funcao.embaralhar(botoes);
+
+        // Reseta o cronômetro.
+        resetCronometro();
+    }//GEN-LAST:event_embaralharActionPerformed
+
+    private void timerLabelComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_timerLabelComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_timerLabelComponentAdded
+
+    private void bPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bPauseActionPerformed
+        // Para o cronômetro e guarda o tempo passado até o momento.
+        tempoPassado = (horas * 3600000) + (minutos * 60000) + (segundos * 1000) + milessegundos;
+        cronometro(false, tempoPassado);
+
+        // Torna o botão "continuar" visível e o botão "pausar" invisível.
+        bContinue.setVisible(true);
+        bPause.setVisible(false);
+
+        // Desabilita todos os botões de jogo.
+        JButton[] botoes = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16};
+        for (int i = 0; i < botoes.length; i++) {
+            botoes[i].setEnabled(false);
+        }
+
+        // Desabilita os botões de "solução" e "embaralhar".
+        solucao.setEnabled(false);
+        embaralhar.setEnabled(false);
+    }//GEN-LAST:event_bPauseActionPerformed
+
+    private void bContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bContinueActionPerformed
+        // Inicia o cronômetro com o tempo passado anteriormente.
+        cronometro(true, tempoPassado);
+
+        // Torna o botão "continuar" invisível e o botão "pausar" visível.
+        bContinue.setVisible(false);
+        bPause.setVisible(true);
+
+        // Habilita todos os botões de jogo.
+        JButton[] botoes = {b1, b2, b3, b4, b5, b6, b7, b8, b9, b10, b11, b12, b13, b14, b15, b16};
+        for (int i = 0; i < botoes.length; i++) {
+            botoes[i].setEnabled(true);
+        }
+
+        // Habilita os botões de "solução" e "embaralhar".
+        solucao.setEnabled(true);
+        embaralhar.setEnabled(true);
+    }//GEN-LAST:event_bContinueActionPerformed
+
+/**
+ * @param args the command line arguments
+ */
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -446,16 +643,28 @@ public class JogoDo15 extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
-                }
+
+}
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(JogoDo15.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(JogoDo15.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(JogoDo15.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(JogoDo15.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(JogoDo15.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(JogoDo15.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(JogoDo15.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+
+} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(JogoDo15.class  
+
+.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -465,8 +674,9 @@ public class JogoDo15 extends javax.swing.JFrame {
                 new JogoDo15().setVisible(true);
             }
         });
-        
+
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton b1;
@@ -485,11 +695,17 @@ public class JogoDo15 extends javax.swing.JFrame {
     private javax.swing.JButton b7;
     private javax.swing.JButton b8;
     private javax.swing.JButton b9;
+    private javax.swing.JButton bContinue;
+    private javax.swing.JButton bPause;
+    private javax.swing.JButton embaralhar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel nJogadas;
     private javax.swing.JButton sair;
     private javax.swing.JButton solucao;
+    public javax.swing.JLabel timerLabel;
     // End of variables declaration//GEN-END:variables
 }

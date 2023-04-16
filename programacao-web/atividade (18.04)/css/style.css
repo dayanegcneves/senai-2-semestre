@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* Definindo as propriedades da tag body */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Definindo as propriedades da tag header */
+header {
+    color: #005cb9;
+}
+
+/* Definindo as propriedades da logo */
+.logo-principal {
+    margin: 15px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    width: 20%;
+}
+
+.logo img {
+    width: 100%;
+}
+
+#mensagem{
+    text-transform: capitalize;
+}
+
+/* Definindo as propriedades do título principal */
+h1 {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 600;
+}
+
+/* Definindo as propriedades da linha */
+.linha {
+    width: 100%;
+    border: 2px solid #005cb9;
+}
+
+/* Definindo as propriedades do menu de navegação */
+nav {
+    margin: 10px 20px 40px 20px;
+}
+
+nav ul {
+    display: flex;
+    justify-content: center;
+    list-style: none;
+    padding-inline-start: 0px;
+}
+
+nav li {
+    margin: 0 30px;
+}
+
+nav a {
+    padding: 10px;
+    text-decoration: none;
+    color: #005cb9;
+    font-size: 18px;
+}
+
+nav a:hover {
+    background-color: #005cb9;
+    color: #fff;
+    border-radius: 20px;
+}
+
+/* Definindo as propriedades da tag section */
+section {
+    margin: 10px 0;
+}
+
+/* Definindo as propriedades do banner */
+.banner {
+    width: 100%;
+}
+
+/* Definindo as propriedades do título da seção */
+h2 {
+    font-size: 24px;
+}
+
+/* Definindo as propriedades do formulário */
+form {
+    margin: 20px 0;
+    padding: 20px;
+    border: 2px solid #005cb9;
+    border-radius: 5px;
+}
+
+legend {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+fieldset {
+    margin-bottom: 20px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    margin-right: 5px;
+}
+
+@media screen and (max-width: 600px) {
+
+    /* estilos para o cabeçalho */
+    header {
+        height: auto;
+        text-align: center;
+    }
+    .logo-principal {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .logo-principal .logo {
+        margin-right: 10px;
+    }
+    #mensagem {
+        display: none;
+    }
+    h1 {
+        font-size: 24px;
+        margin: 0;
+        padding: 20px;
+    }
+    nav {
+        display: none;
+    }
+
+    /* estilos para as seções */
+    section {
+        padding: 20px;
+    }
+    .banner {
+        width: 100%;
+    }
+    h2 {
+        font-size: 20px;
+        margin-top: 20px;
+    }
+    p {
+        font-size: 16px;
+    }
+    ol {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+    ol li {
+        margin-bottom: 10px;
+    }
+    ol li a {
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    /* estilos para o formulário */
+    form {
+        padding: 20px;
+    }
+    fieldset {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+    legend {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+    table {
+        width: 100%;
+    }
+    td, th {
+        padding: 10px;
+    }
+    input[type="text"], input[type="email"], input[type="password"], input[type="tel"] {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-bottom: 10px;
+    }
+    input[type="radio"] {
+        margin-right: 5px;
+    }
+    button[type="submit"] {
+        padding: 10px;
+        border-radius: 5px;
+        border: none;
+        background-color: #0077ff;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+}
